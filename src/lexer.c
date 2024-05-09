@@ -65,6 +65,22 @@ token_T* getNextToken(lexer_T* lexer)
                             initToken(TOKEN_RBRAK,
                             getCurrentCharAsString(lexer)));
                             break;
+            case '+': return advanceLexerWithToken(lexer,
+                            initToken(TOKEN_ADD,
+                            getCurrentCharAsString(lexer)));
+                            break;
+            case '-': return advanceLexerWithToken(lexer,
+                            initToken(TOKEN_SUB,
+                            getCurrentCharAsString(lexer)));
+                            break;
+            case '*': return advanceLexerWithToken(lexer,
+                            initToken(TOKEN_MUL,
+                            getCurrentCharAsString(lexer)));
+                            break;
+            case '/': return advanceLexerWithToken(lexer,
+                            initToken(TOKEN_DIV,
+                            getCurrentCharAsString(lexer)));
+                            break;
  
         }
     }

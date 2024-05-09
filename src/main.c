@@ -4,8 +4,11 @@
 int main(int argc, char* argv[]) 
 {
     lexer_T* lexer = initLexer(
-    "yarn : \"Lonnie Liston Smith\"|\n"
-    "say<name>|\n" 
+    "yarn name : \"Lonnie Liston Smith\"|\n"
+    "say<name>|\n"
+    "yarn x : 10\n"
+    "yarn y : 20\n"
+    "yarn z : x + y\n" 
     ); 
 
     token_T* token = (void*)0;

@@ -13,7 +13,11 @@ typedef struct TOKEN_STRUCT
         TOKEN_STRING,
         TOKEN_TERMIN,
         TOKEN_LBRAK,
-        TOKEN_RBRAK
+        TOKEN_RBRAK,
+        TOKEN_ADD,
+        TOKEN_SUB,
+        TOKEN_MUL,
+        TOKEN_DIV
     } type;
 
     char* value;

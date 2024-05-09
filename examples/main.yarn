@@ -1,4 +1,4 @@
-yarn : "Lonnie Liston Smith"|
+yarn name : "Lonnie Liston Smith"|
 
 say<name>|
 
@@ -8,3 +8,9 @@ patch function<name>
 loop (x : 5)
     say<x>|
     x : x + 1|
+
+yarn x : 10|
+yarn y : 20|
+
+yarn res : x + y|
+say<res>|
