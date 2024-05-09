@@ -1,0 +1,10 @@
+yarn : "Lonnie Liston Smith"|
+
+say<name>|
+
+patch function<name>
+    say<Hello> + name|
+
+loop (x : 5)
+    say<x>|
+    x : x + 1|
