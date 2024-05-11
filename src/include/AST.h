@@ -9,22 +9,27 @@ typedef struct AST_STRUCT
         AST_VAR_DEFINE,
         AST_VAR,
         AST_FUNC_CALL,
-        ATS_STRING
+        AST_STRING,
+        AST_COMPOUND
    } type;
 
-    /* AST VAR DEFINITION */
+    // AST VAR DEFINITION 
     char* varDefVarName;
     struct AST_STRUCT* varDefValue;
 
-    /* AST VARIABLE */
+    // AST VARIABLE 
     char* variableName;
 
-    /* AST FUNCTION CALL */
+    // AST FUNCTION CALL
     char* funcCallName;
     struct AST_STRUCT** funcCallArguments;
     size_t funcCallArgumentsSize;
 
     char* stringValue;
+
+    // AST COMPOUND
+    struct AST_STRUCT** compoundValue;
+    size_t compoundSize;
 
 } AST_T;
 

@@ -16,5 +16,8 @@ AST_T* initAST(int type)
 
     ast->stringValue = (void*)0;
 
+    ast->compoundValue = (void*)0;
+    ast->compoundSize = 0;
+
     return ast;
 }
