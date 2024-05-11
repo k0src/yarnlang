@@ -57,7 +57,10 @@ AST_T* parseStatements(parser_T* parser)
 
 AST_T* parseExpr(parser_T* parser)
 {
-
+    switch (parser->currentToken->type)
+    {
+        case TOKEN_STRING: return parseString(parser);
+    }
 }
 
 AST_T* parseFactor(parser_T* parser)
@@ -79,7 +82,7 @@ AST_T* parseVarDefinition(parser_T* parser)
 {
     parserEat(parser, TOKEN_ID); //var 
     char* varDefVarName = parser->currentToken->value;
-    parserEat(parser, TOKEN_ID);
+    parserEat(parser, TOKEN_ID); // var name
     parserEat(parser, TOKEN_EQUALS);
     AST_T* varDefValue = parseExpr(parser);
 
@@ -92,17 +95,31 @@ AST_T* parseVarDefinition(parser_T* parser)
 
 AST_T* parseVar(parser_T* parser)
 {
+    char* tokenValue = parser->currentToken->value;
+    parserEat(parser, TOKEN_ID); // var or func call
 
+    if (parser->currentToken->type == TOKEN_LBRAK)
+        return parseFuncCall(parser);
+
+    AST_T* astVar = initAST(AST_VAR);
+    astVar->variableName = tokenValue;
+
+    return astVar;
 }
 
 AST_T* parseString(parser_T* parser)
 {
+    AST_T* astString = initAST(AST_STRING);
+    astString->stringValue = parser->currentToken->value;
 
+    parserEat(parser, TOKEN_STRING);
+
+    return astString;
 }
 
 AST_T* parseID(parser_T* parser)
 {
-    if (strcmp(parser->currentToken->value, "var") == 0)
+    if (strcmp(parser->currentToken->value, "yarn") == 0)
     {
         return parseVarDefinition(parser);
     }
