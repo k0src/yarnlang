@@ -3,17 +3,27 @@
 
 #include "AST.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-AST_T* visitorVisit(AST_T* node);
+typedef struct VISITOR_STRUCT
+{
+    AST_T** variable_definitions;
+    size_t variable_definitions_size;
+} visitor_T;
 
-AST_T* visitorVisitVarDef(AST_T* node);
+visitor_T* initVisitor();
 
-AST_T* visitorVisitVar(AST_T* node);
+AST_T* visitorVisit(visitor_T* visitor, AST_T* node);
 
-AST_T* visitorVisitFuncCall(AST_T* node);
+AST_T* visitorVisitVarDef(visitor_T* visitor, AST_T* node);
 
-AST_T* visitorVisitString(AST_T* node);
+AST_T* visitorVisitVar(visitor_T* visitor, AST_T* node);
 
-AST_T* visitorVisitCompound(AST_T* node);
+AST_T* visitorVisitFuncCall(visitor_T* visitor, AST_T* node);
+
+AST_T* visitorVisitString(visitor_T* visitor, AST_T* node);
+
+AST_T* visitorVisitCompound(visitor_T* visitor, AST_T* node);
 
 #endif

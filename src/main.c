@@ -7,12 +7,14 @@ int main(int argc, char* argv[])
 {
     lexer_T* lexer = initLexer(
     "yarn name : \"Lonnie Liston Smith\"|\n"
-    "say<name>|\n"
+    "yarn otherName : \"LTJ Bukem\"|\n"
+    "say<name, otherName>|\n"
     ); 
 
     parser_T* parser = initParser(lexer);
     AST_T* root = parserParse(parser);
-    visitorVisit(root);
+    visitor_T* visitor = initVisitor();
+    visitorVisit(visitor, root);
 
     return 0;
 }
