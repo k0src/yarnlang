@@ -9,6 +9,7 @@ int main(int argc, char* argv[])
     "yarn name : \"Lonnie Liston Smith\"|\n"
     "yarn otherName : \"LTJ Bukem\"|\n"
     "say<name, otherName>|\n"
+    "cute<>\n"
     ); 
 
     parser_T* parser = initParser(lexer);

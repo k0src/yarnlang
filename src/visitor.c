@@ -19,6 +19,12 @@ static AST_T* builtinPrintFunc(visitor_T* visitor, AST_T** args, int args_size)
     return initAST(AST_NOOP);
 }
 
+static AST_T* cuteFunc(visitor_T* visitor)
+{
+    printf("°º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸\n");
+    return initAST(AST_NOOP);
+}
+
 visitor_T* initVisitor()
 {
     visitor_T* visitor = calloc(1, sizeof(struct VISITOR_STRUCT));
@@ -88,6 +94,10 @@ AST_T* visitorVisitFuncCall(visitor_T* visitor, AST_T* node)
     if (strcmp(node->funcCallName, "say") == 0) 
     {
         return builtinPrintFunc(visitor, node->funcCallArguments, node->funcCallArgumentsSize);
+    }
+    else if (strcmp(node->funcCallName, "cute") == 0) 
+    {
+        return cuteFunc(visitor);
     }
     else 
     {
