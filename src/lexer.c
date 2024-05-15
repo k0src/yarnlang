@@ -81,11 +81,15 @@ token_T* getNextToken(lexer_T* lexer)
                             initToken(TOKEN_DIV,
                             getCurrentCharAsString(lexer)));
                             break;
+            case ',': return advanceLexerWithToken(lexer,
+                            initToken(TOKEN_COMMA,
+                            getCurrentCharAsString(lexer)));
+                            break;
  
         }
     }
 
-    return (void*)0;
+    return initToken(TOKEN_EOF, "\0");
 }
 
 token_T* getString(lexer_T* lexer)

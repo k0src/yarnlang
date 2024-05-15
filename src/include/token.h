@@ -17,7 +17,9 @@ typedef struct TOKEN_STRUCT
         TOKEN_ADD,
         TOKEN_SUB,
         TOKEN_MUL,
-        TOKEN_DIV
+        TOKEN_DIV,
+        TOKEN_COMMA,
+        TOKEN_EOF
     } type;
 
     char* value;

@@ -12,8 +12,5 @@ int main(int argc, char* argv[])
     parser_T* parser = initParser(lexer);
     AST_T* root = parserParse(parser);
 
-    printf("%d\n", root->type);
-    printf("%zu\n", root->compoundSize);
-
     return 0;
 }

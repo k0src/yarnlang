@@ -6,14 +6,18 @@ parser_T* initParser(lexer_T* lexer)
     parser_T* parser = calloc(1, sizeof(struct PARSER_STRUCT));
     parser->lexer = lexer;
     parser->currentToken = getNextToken(lexer);
+    parser->previousToken = parser->currentToken;
 
     return parser;
 }
 
 parser_T* parserEat(parser_T* parser, int tokenType)
 {
-    if (parser->currentToken->type == tokenType)
+    if (parser->currentToken->type == tokenType) 
+    {
+        parser->previousToken = parser->currentToken;
         parser->currentToken = getNextToken(parser->lexer);
+    }
     else 
     {
         printf("Unexpected token :( -> %s, Type -> %d", parser->currentToken->value, parser->currentToken->type);
@@ -60,6 +64,7 @@ AST_T* parseExpr(parser_T* parser)
     switch (parser->currentToken->type)
     {
         case TOKEN_STRING: return parseString(parser);
+        case TOKEN_ID: return parseID(parser);
     }
 }
 
@@ -75,7 +80,28 @@ AST_T* parseTerm(parser_T* parser)
 
 AST_T* parseFuncCall(parser_T* parser)
 {
+    AST_T* functionCall = initAST(AST_FUNC_CALL);
+    parserEat(parser, TOKEN_LBRAK);
 
+    functionCall->funcCallName = parser->previousToken->value;
+
+    functionCall->funcCallArguments = calloc(1, sizeof(struct AST_STRUCT*));
+
+    AST_T* expr = parseExpr(parser);
+    functionCall->funcCallArguments[0] = expr;
+
+    while (parser->currentToken->type == TOKEN_COMMA) 
+    {
+        parserEat(parser, TOKEN_COMMA);
+
+        AST_T* expr = parseExpr(parser);
+        functionCall->funcCallArgumentsSize += 1;
+        functionCall->funcCallArguments = realloc(functionCall->funcCallArguments, functionCall->funcCallArgumentsSize * sizeof(struct AST_STRUCT*));
+        functionCall->funcCallArguments[functionCall->funcCallArgumentsSize - 1] = expr;
+    }
+    parserEat(parser, TOKEN_RBRAK);
+
+    return functionCall;
 }
 
 AST_T* parseVarDefinition(parser_T* parser) 
