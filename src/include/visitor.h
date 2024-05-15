@@ -2,12 +2,15 @@
 #define VISITOR_H
 
 #include "AST.h"
+#include <stdio.h>
 
 AST_T* visitorVisit(AST_T* node);
 
 AST_T* visitorVisitVarDef(AST_T* node);
 
 AST_T* visitorVisitVar(AST_T* node);
+
+AST_T* visitorVisitFuncCall(AST_T* node);
 
 AST_T* visitorVisitString(AST_T* node);
 

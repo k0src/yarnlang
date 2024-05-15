@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "include/lexer.h"
 #include "include/parser.h"
+#include "include/visitor.h"
 
 int main(int argc, char* argv[]) 
 {
@@ -11,6 +12,7 @@ int main(int argc, char* argv[])
 
     parser_T* parser = initParser(lexer);
     AST_T* root = parserParse(parser);
+    visitorVisit(root);
 
     return 0;
 }

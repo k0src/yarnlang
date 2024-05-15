@@ -36,6 +36,7 @@ AST_T* parseStatement(parser_T* parser)
     {
         case TOKEN_ID: return parseID(parser);
     }
+    return initAST(AST_NOOP);
 }
 
 AST_T* parseStatements(parser_T* parser)
@@ -45,15 +46,19 @@ AST_T* parseStatements(parser_T* parser)
     
     AST_T* astStatement = parseStatement(parser);
     compound->compoundValue[0] = astStatement;
+    compound->compoundSize += 1;
 
     while (parser->currentToken->type == TOKEN_TERMIN)
     {
         parserEat(parser, TOKEN_TERMIN);
 
         AST_T* astStatement = parseStatement(parser);
-        compound->compoundSize += 1;
-        compound->compoundValue = realloc(compound->compoundValue, compound->compoundSize * sizeof(struct AST_STRUCT*));
-        compound->compoundValue[compound->compoundSize - 1] = astStatement;
+        if (astStatement) 
+        {
+            compound->compoundSize += 1;
+            compound->compoundValue = realloc(compound->compoundValue, compound->compoundSize * sizeof(struct AST_STRUCT*));
+            compound->compoundValue[compound->compoundSize - 1] = astStatement;
+        }
     }
     
     return compound;
@@ -66,6 +71,7 @@ AST_T* parseExpr(parser_T* parser)
         case TOKEN_STRING: return parseString(parser);
         case TOKEN_ID: return parseID(parser);
     }
+    return initAST(AST_NOOP);
 }
 
 AST_T* parseFactor(parser_T* parser)
@@ -89,6 +95,7 @@ AST_T* parseFuncCall(parser_T* parser)
 
     AST_T* expr = parseExpr(parser);
     functionCall->funcCallArguments[0] = expr;
+    functionCall->funcCallArgumentsSize += 1;
 
     while (parser->currentToken->type == TOKEN_COMMA) 
     {
