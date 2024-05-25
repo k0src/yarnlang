@@ -40,6 +40,8 @@ AST_T* visitorVisit(visitor_T* visitor, AST_T* node)
     {
         case AST_VAR_DEFINE:
             return visitorVisitVarDef(visitor, node);
+        case AST_FUNC_DEFINE:
+            return visitorVisitFuncDef(visitor, node);
         case AST_VAR:
             return visitorVisitVar(visitor, node);
         case AST_FUNC_CALL:
@@ -57,8 +59,6 @@ AST_T* visitorVisit(visitor_T* visitor, AST_T* node)
 
 AST_T* visitorVisitVarDef(visitor_T* visitor, AST_T* node)
 {
-
-
     if (visitor->variable_definitions == (void*)0) 
     {
         visitor->variable_definitions = calloc(1, sizeof(struct AST_STRUCT*));
@@ -72,6 +72,12 @@ AST_T* visitorVisitVarDef(visitor_T* visitor, AST_T* node)
                                         (visitor->variable_definitions_size + 1) * sizeof(struct AST_STRUCT*));
         visitor->variable_definitions[visitor->variable_definitions_size - 1] = node;
     }
+    return node;
+}
+
+AST_T* visitorVisitFuncDef(visitor_T* visitor, AST_T* node)
+{
+    printf("func\n");
     return node;
 }
 

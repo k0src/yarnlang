@@ -14,6 +14,8 @@ typedef struct TOKEN_STRUCT
         TOKEN_TERMIN,
         TOKEN_LBRAK,
         TOKEN_RBRAK,
+        TOKEN_LBRACE,
+        TOKEN_RBRACE,
         TOKEN_ADD,
         TOKEN_SUB,
         TOKEN_MUL,

@@ -31,6 +31,8 @@ AST_T* parseTerm(parser_T* parser);
 
 AST_T* parseFuncCall(parser_T* parser);
 
+AST_T* parseFuncDef(parser_T* parser);
+
 AST_T* parseVarDefinition(parser_T* parser);
 
 AST_T* parseVar(parser_T* parser);

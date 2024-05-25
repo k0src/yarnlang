@@ -65,6 +65,14 @@ token_T* getNextToken(lexer_T* lexer)
                             initToken(TOKEN_RBRAK,
                             getCurrentCharAsString(lexer)));
                             break;
+            case '{': return advanceLexerWithToken(lexer,  
+                            initToken(TOKEN_LBRACE,
+                            getCurrentCharAsString(lexer)));
+                            break;
+            case '}': return advanceLexerWithToken(lexer,  
+                            initToken(TOKEN_RBRACE,
+                            getCurrentCharAsString(lexer)));
+                            break;
             case '+': return advanceLexerWithToken(lexer,
                             initToken(TOKEN_ADD,
                             getCurrentCharAsString(lexer)));

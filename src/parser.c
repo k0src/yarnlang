@@ -126,6 +126,24 @@ AST_T* parseVarDefinition(parser_T* parser)
     return varDefintion;
 }
 
+AST_T* parseFuncDef(parser_T* parser)
+{
+    AST_T* ast = initAST(AST_FUNC_DEFINE);
+
+    parserEat(parser, TOKEN_ID); // func
+    char* funcName = parser->currentToken->value;
+    parserEat(parser, TOKEN_ID); // func name
+    parserEat(parser, TOKEN_LBRAK);
+    parserEat(parser, TOKEN_RBRAK);
+    parserEat(parser, TOKEN_LBRACE);
+
+    ast->funcDefBody = parseStatements(parser);
+
+    parserEat(parser, TOKEN_RBRACE);
+
+    return ast;
+}
+
 AST_T* parseVar(parser_T* parser)
 {
     char* tokenValue = parser->currentToken->value;
@@ -155,6 +173,10 @@ AST_T* parseID(parser_T* parser)
     if (strcmp(parser->currentToken->value, "yarn") == 0)
     {
         return parseVarDefinition(parser);
+    }
+    else if (strcmp(parser->currentToken->value, "patch") == 0)
+    {
+        return parseFuncDef(parser);   
     }
     else
     {

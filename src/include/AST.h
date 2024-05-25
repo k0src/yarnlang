@@ -7,6 +7,7 @@ typedef struct AST_STRUCT
 {
    enum {
         AST_VAR_DEFINE,
+        AST_FUNC_DEFINE,
         AST_VAR,
         AST_FUNC_CALL,
         AST_STRING,
@@ -17,6 +18,10 @@ typedef struct AST_STRUCT
     // AST VAR DEFINITION 
     char* varDefVarName;
     struct AST_STRUCT* varDefValue;
+
+    // AST FUNCTION DEFINITION
+    struct AST_STRUCT* funcDefBody;
+    
 
     // AST VARIABLE 
     char* variableName;

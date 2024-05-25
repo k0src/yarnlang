@@ -8,6 +8,8 @@ AST_T* initAST(int type)
     ast->varDefVarName = (void*)0;
     ast->varDefValue = (void*)0;
 
+    ast->funcDefBody = (void*)0;
+
     ast->variableName = (void*)0;
 
     ast->funcCallName = (void*)0;
