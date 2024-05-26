@@ -1,0 +1,16 @@
+yarn message : "Hello, this is yarn v.0.0.1!"|
+
+say<message>|
+say<"say is used to print to the console.">|
+
+patch function<>
+{
+    say<"Patches are functions!">|
+}|
+
+function<>|
+function<>|
+function<>|
+function<>|
+
+say<"Thank you!">|
