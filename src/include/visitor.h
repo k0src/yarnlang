@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "scope.h"
 
 typedef struct VISITOR_STRUCT
 {

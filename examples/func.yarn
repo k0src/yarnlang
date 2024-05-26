@@ -1,6 +1,6 @@
 patch sayHello<>
 {
     say<"Hello">|
-}
+}|
 
 sayHello<>|

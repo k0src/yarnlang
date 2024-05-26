@@ -19,12 +19,6 @@ static AST_T* builtinPrintFunc(visitor_T* visitor, AST_T** args, int args_size)
     return initAST(AST_NOOP);
 }
 
-static AST_T* cuteFunc(visitor_T* visitor)
-{
-    printf("°º¤ø,¸¸,ø¤º°`°º¤ø,¸,ø¤°º¤ø,¸¸,ø¤º°`°º¤ø,¸\n");
-    return initAST(AST_NOOP);
-}
-
 visitor_T* initVisitor()
 {
     visitor_T* visitor = calloc(1, sizeof(struct VISITOR_STRUCT));
@@ -77,7 +71,8 @@ AST_T* visitorVisitVarDef(visitor_T* visitor, AST_T* node)
 
 AST_T* visitorVisitFuncDef(visitor_T* visitor, AST_T* node)
 {
-    printf("func\n");
+    scopeAddFunctionDefinition(node->scope, node);
+
     return node;
 }
 
@@ -101,15 +96,16 @@ AST_T* visitorVisitFuncCall(visitor_T* visitor, AST_T* node)
     {
         return builtinPrintFunc(visitor, node->funcCallArguments, node->funcCallArgumentsSize);
     }
-    else if (strcmp(node->funcCallName, "cute") == 0) 
+
+    AST_T* functionDefinition = scopeGetFunctionDefinition(node->scope, node->funcCallName);
+    if (functionDefinition) 
     {
-        return cuteFunc(visitor);
+        return visitorVisit(visitor, functionDefinition->funcDefBody);
     }
-    else 
-    {
-        printf("Error: uncaught function call of name: %s\n", node->funcCallName);
-        exit(1);
-    }
+
+    printf("Error: uncaught function call of name: %s\n", node->funcCallName);
+    exit(1);
+
 }
 
 AST_T* visitorVisitString(visitor_T* visitor, AST_T* node)

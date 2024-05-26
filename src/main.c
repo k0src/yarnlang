@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     lexer_T* lexer = initLexer(file_contents);
 
     parser_T* parser = initParser(lexer);
-    AST_T* root = parserParse(parser);
+    AST_T* root = parserParse(parser, parser->scope);
 
     visitor_T* visitor = initVisitor();
     visitorVisit(visitor, root);

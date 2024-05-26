@@ -15,13 +15,15 @@ typedef struct AST_STRUCT
         AST_NOOP
    } type;
 
+   struct SCOPE_STRUCT* scope;
+
     // AST VAR DEFINITION 
     char* varDefVarName;
     struct AST_STRUCT* varDefValue;
 
     // AST FUNCTION DEFINITION
     struct AST_STRUCT* funcDefBody;
-    
+    char* funcDefName;
 
     // AST VARIABLE 
     char* variableName;
