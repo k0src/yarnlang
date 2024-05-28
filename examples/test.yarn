@@ -14,3 +14,8 @@ function<>|
 function<>|
 
 say<"Thank you!">|
+
+
+yarn name : "Reno"|
+
+say<name>|

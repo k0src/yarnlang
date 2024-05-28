@@ -144,8 +144,25 @@ AST_T* parseFuncDef(parser_T* parser, scope_T* scope)
     strcpy(ast->funcDefName, funcName);
 
     parserEat(parser, TOKEN_ID); // func name
+
     parserEat(parser, TOKEN_LBRAK);
+
+    ast->funcDefArgs = calloc(1, sizeof(struct AST_STRUCT*));
+    AST_T* arg = parseVar(parser, scope);
+    ast->funcDefArgsSize += 1;
+    ast->funcDefArgs[ast->funcDefArgsSize - 1] = arg;
+
+    while (parser->currentToken->type == TOKEN_COMMA)
+    {
+        parserEat(parser, TOKEN_COMMA);
+        ast->funcDefArgsSize += 1;
+        ast->funcDefArgs = realloc(ast->funcDefArgs, ast->funcDefArgsSize * sizeof(struct AST_STRUCT*));
+        AST_T* arg = parseVar(parser, scope);
+        ast->funcDefArgs[ast->funcDefArgsSize - 1] = arg;
+    }
+
     parserEat(parser, TOKEN_RBRAK);
+
     parserEat(parser, TOKEN_LBRACE);
 
     ast->funcDefBody = parseStatements(parser, scope);

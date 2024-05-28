@@ -1,0 +1,6 @@
+patch greet<x, y>
+{
+    say<x, y>|
+}|
+
+greet<"hello ", "world">|

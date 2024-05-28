@@ -24,6 +24,8 @@ typedef struct AST_STRUCT
     // AST FUNCTION DEFINITION
     struct AST_STRUCT* funcDefBody;
     char* funcDefName;
+    struct AST_STRUCT** funcDefArgs;
+    size_t funcDefArgsSize;
 
     // AST VARIABLE 
     char* variableName;

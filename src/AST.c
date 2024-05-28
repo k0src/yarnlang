@@ -12,6 +12,8 @@ AST_T* initAST(int type)
 
     ast->funcDefBody = (void*)0;
     ast->funcDefName = (void*)0;
+    ast->funcDefArgs = (void*)0;
+    ast->funcDefArgsSize = 0;
 
     ast->variableName = (void*)0;
 
