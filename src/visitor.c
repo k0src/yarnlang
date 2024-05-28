@@ -22,8 +22,6 @@ static AST_T* builtinPrintFunc(visitor_T* visitor, AST_T** args, int args_size)
 visitor_T* initVisitor()
 {
     visitor_T* visitor = calloc(1, sizeof(struct VISITOR_STRUCT));
-    visitor->variable_definitions = (void*)0;
-    visitor->variable_definitions_size = 0;
 
     return visitor;
 }
@@ -53,19 +51,8 @@ AST_T* visitorVisit(visitor_T* visitor, AST_T* node)
 
 AST_T* visitorVisitVarDef(visitor_T* visitor, AST_T* node)
 {
-    if (visitor->variable_definitions == (void*)0) 
-    {
-        visitor->variable_definitions = calloc(1, sizeof(struct AST_STRUCT*));
-        visitor->variable_definitions[0] = node;
-        visitor->variable_definitions_size += 1;
-    }
-    else 
-    {
-        visitor->variable_definitions_size += 1;
-        visitor->variable_definitions = realloc(visitor->variable_definitions, 
-                                        (visitor->variable_definitions_size + 1) * sizeof(struct AST_STRUCT*));
-        visitor->variable_definitions[visitor->variable_definitions_size - 1] = node;
-    }
+    scopeAddVariableDefinition(node->scope, node);
+
     return node;
 }
 
@@ -78,16 +65,15 @@ AST_T* visitorVisitFuncDef(visitor_T* visitor, AST_T* node)
 
 AST_T* visitorVisitVar(visitor_T* visitor, AST_T* node)
 {
-    for (int i = 0; i < visitor->variable_definitions_size; i++) 
+    AST_T* varDef = scopeGetVariableDefinition(node->scope, node->variableName);
+
+    if (varDef) 
     {
-        AST_T* varDef = visitor->variable_definitions[i];
-        if (strcmp(varDef->varDefVarName, node->variableName) == 0) 
-        {
-            return visitorVisit(visitor, varDef->varDefValue);
-        }
+        return visitorVisit(visitor, varDef->varDefValue);
     }
+
     printf("Error: variable %s not defined\n", node->variableName);
-    return node;
+    exit(1);
 }
 
 AST_T* visitorVisitFuncCall(visitor_T* visitor, AST_T* node)
