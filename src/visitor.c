@@ -84,14 +84,27 @@ AST_T* visitorVisitFuncCall(visitor_T* visitor, AST_T* node)
     }
 
     AST_T* functionDefinition = scopeGetFunctionDefinition(node->scope, node->funcCallName);
-    if (functionDefinition) 
+
+    if (functionDefinition == (void*)0) 
     {
-        return visitorVisit(visitor, functionDefinition->funcDefBody);
+        printf("Error: uncaught function call of name: %s\n", node->funcCallName);
+        exit(1);
     }
 
-    printf("Error: uncaught function call of name: %s\n", node->funcCallName);
-    exit(1);
+    for (int i = 0; i < functionDefinition->funcDefArgsSize; i++) 
+    {
+        AST_T* arg = functionDefinition->funcDefArgs[i];
+        AST_T* value = node->funcCallArguments[i];
+        
+        AST_T* varDef = initAST(AST_VAR_DEFINE);
+        varDef->varDefVarName = calloc(strlen(arg->variableName) + 1, sizeof(char));
+        strcpy(varDef->varDefVarName, arg->variableName);
+        varDef->varDefValue = value;
 
+        scopeAddVariableDefinition(functionDefinition->scope, varDef);
+    }
+
+    return visitorVisit(visitor, functionDefinition->funcDefBody);
 }
 
 AST_T* visitorVisitString(visitor_T* visitor, AST_T* node)
